@@ -1,0 +1,13 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "malongoBot",
+  "outputfilename": "malongoBot",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Gustavo Pfleger Rebelo",
+    "email": "gustavo.pr2005@aluno.ifsc.edu.br"
+  }
+}
