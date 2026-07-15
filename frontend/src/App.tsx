@@ -40,17 +40,6 @@ const App = () => {
         setTimeHours(hours)
     }
 
-    const timerStart = () => {
-        let hours   = parseInt(timeHours)
-        let minutes = parseInt(timeMinutes)
-        let seconds = parseInt(timeSeconds)
-
-        if (seconds > 0){
-            seconds = seconds - 1
-            setTimeSeconds(seconds)
-        }
-    }
-
     return (
         <div>
             <h1>MalongoBot</h1>
