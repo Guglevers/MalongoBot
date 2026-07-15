@@ -1,28 +1,80 @@
-import {useState} from 'react';
-import logo from './assets/images/logo-universal.png';
-import './App.css';
-import {Greet} from "../wailsjs/go/main/App";
+import React, { useState, useRef, useEffect } from "react";
+import logo from './assets/images/malongo.jpg';
 
-function App() {
-    const [resultText, setResultText] = useState("Please enter your name below 👇");
-    const [name, setName] = useState('');
-    const updateName = (e: any) => setName(e.target.value);
-    const updateResultText = (result: string) => setResultText(result);
+const App = () => {
+    const [timeMinutes, setTimeMinutes] = useState("00")
+    const [timeHours,   setTimeHours  ] = useState("00")
+    const [timeSeconds, setTimeSeconds ] = useState("00")
 
-    function greet() {
-        Greet(name).then(updateResultText);
+    const handleTimeMinutesChange = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+        let minutes = e.target.value.replace(/\D/g, "")
+
+        if (parseInt(minutes) > 59) {
+            minutes = "59"
+            e.target.value = "59"
+        }
+
+        minutes = minutes.padStart(2, "0")
+
+        setTimeMinutes(minutes)
+    }
+
+    const handleTimeSecondsChange = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+        let seconds = e.target.value.replace(/\D/g, "")
+
+        if (parseInt(seconds) > 59) {
+            seconds = "59"
+            e.target.value = "59"
+        }
+
+        seconds = seconds.padStart(2, "0")
+
+        setTimeSeconds(seconds)
+    }
+
+    const handleTimeHoursChange = (e: React.ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+        let hours = e.target.value.replace(/\D/g, "")
+
+        hours = hours.padStart(2, "0")
+
+        setTimeHours(hours)
+    }
+
+    const timerStart = () => {
+        let hours   = parseInt(timeHours)
+        let minutes = parseInt(timeMinutes)
+        let seconds = parseInt(timeSeconds)
+
+        if (seconds > 0){
+            seconds = seconds - 1
+            setTimeSeconds(seconds)
+        }
     }
 
     return (
-        <div id="App">
-            <img src={logo} id="logo" alt="logo"/>
-            <div id="result" className="result">{resultText}</div>
-            <div id="input" className="input-box">
-                <input id="name" className="input" onChange={updateName} autoComplete="off" name="input" type="text"/>
-                <button className="btn" onClick={greet}>Greet</button>
+        <div>
+            <h1>MalongoBot</h1>
+            <h3>Duração do vídeo</h3>
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", gap: "5px" }}>
+                <input name="hours" onChange={(e) => handleTimeHoursChange(e)} type="text" defaultValue={"00"} maxLength={2} style={{ width: "25px", textAlign: "center" }} />
+                <span>:</span>
+                <input name="minutes" onChange={(e) => handleTimeMinutesChange(e)} type="text" defaultValue={"00"} maxLength={2} style={{ width: "25px", textAlign: "center" }} />
+                <span>:</span>
+                <input name="seconds" onChange={(e) => handleTimeSecondsChange(e)} type="text" defaultValue={"00"} maxLength={2} style={{ width: "25px", textAlign: "center" }} />
             </div>
+            <div style={{ marginTop: "50px" }}>
+                <div>Timer</div>
+                <span style={{ fontSize: "75px", fontWeight: "bolder" }}>{timeHours}</span>
+                <span style={{ fontSize: "75px", fontWeight: "bolder" }}>:</span>
+                <span style={{ fontSize: "75px", fontWeight: "bolder" }}>{timeMinutes}</span>
+                <span style={{ fontSize: "75px", fontWeight: "bolder" }}>:</span>
+                <span style={{ fontSize: "75px", fontWeight: "bolder" }}>{timeSeconds}</span>
+            </div>
+            <button name="start">Start</button>
+            <br />
+            <img style={{width: "160px"}} src={logo} alt="Channel Logo" />
         </div>
-    )
-}
+    );
+};
 
-export default App
+export default App;
