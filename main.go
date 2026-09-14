@@ -6,6 +6,7 @@ import (
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"github.com/wailsapp/wails/v2/pkg/options/windows"
 )
 
 //go:embed all:frontend/dist
@@ -23,8 +24,12 @@ func main() {
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
-		BackgroundColour: &options.RGBA{R: 57, G: 43, B: 130, A: 1},
-		OnStartup:        app.startup,
+		// Same color as --background in .dark (index.css), avoids a white flash on load
+		BackgroundColour: &options.RGBA{R: 10, G: 10, B: 10, A: 255},
+		Windows: &windows.Options{
+			Theme: windows.Dark,
+		},
+		OnStartup: app.startup,
 		Bind: []interface{}{
 			app,
 		},
